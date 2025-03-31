@@ -1,14 +1,20 @@
 from bs4 import BeautifulSoup
 import requests
+from fake_useragent import UserAgent
+
 
 
 class ScrapManager():
 
     def __init__(self):
+        ua = UserAgent()
+        self.headers = {
+            "User-Agent": ua.random
+        }
         self.data_list=[]
-        self.get_whole_page()
+        self.get_whole_page_schadeautos()
 
-    def get_whole_page(self):
+    def get_whole_page_schadeautos(self):
         self.data_list = []
         response = requests.get("https://www.schadeautos.nl/pl/szukaj/uszkodzony/samochody-osobowe/1/1/0/0/0/0/1/0")
         response.raise_for_status()
@@ -46,6 +52,69 @@ class ScrapManager():
 
 
         for i in range(0, len(car_ad_links)):
+                self.data_list.append({
+                    "name":car_names[i],
+                    "details":{
+                    "price": car_prices[i],
+                    "year": car_years[i],
+                    "mileage": car_mileages[i],
+                    "ad_link": f"https://www.schadeautos.nl{car_ad_links[i]}",
+                }
+            })
+
+    def get_whole_page_mobilede(self):
+        self.data_list = []
+        response = requests.get("https://suchen.mobile.de/fahrzeuge/search.html?dam=false&isSearchRequest=true&od=down&ref=srpHead&refId=03a3bb4d-b2bb-cf0c-6df9-2a007c5505c8&s=Car&sb=doc&vc=Car", headers=self.headers)
+        response.raise_for_status()
+        content = response.text
+        mobile_soup = BeautifulSoup(content, "html.parser")
+
+        ads_div = mobile_soup.find_all(name="div", class_="mN_WC")
+        ads_links = [div.find(name="h2").find(name="a").get_text() for div in ads_div]
+
+        car_names = []
+        car_years = []
+        car_prices = []
+        car_mileages = []
+        for ad in ads_links:
+            print(ad)
+            response = requests.get(ad, headers=self.headers)
+            response.raise_for_status()
+            content = response.text
+            ad_soup = BeautifulSoup(content, "html.parser")
+
+            car_name = ad_soup.find(name="h2", class_="dNpqi").get_text()
+            car_names.append(car_name)
+
+            car_price = ad_soup.find(name="div", class_="zgAoK dNpqi").get_text()
+            car_prices.append(car_price)
+
+            car_year = ad_soup.find('div', {'data-testid': 'vip-key-features-list-item-mileage'}).find(name="div", class_="geJSa").get_text()
+            car_years.append(car_year)
+
+            car_year = ad_soup.find('div', {'data-testid': 'vip-key-features-list-item-firstRegistration'}).find(name="div", class_="geJSa").get_text()
+            car_years.append(car_year)
+
+
+
+        if len(car_prices) < len(ads_links):
+            for i in range(len(car_prices), len(ads_links)):
+                car_prices.append("Nie podana")
+
+        if len(car_years) < len(ads_links):
+            for i in range(len(car_years), len(ads_links)):
+                car_years.append("Nie podana")
+
+        if len(car_mileages) < len(ads_links):
+            for i in range(len(car_mileages), len(ads_links)):
+                car_mileages.append("Nie podana")
+
+        if len(car_names) < len(ads_links):
+            for i in range(len(car_names), len(ads_links)):
+                car_names.append("Nie podana")
+
+
+        for i in range(0, len(ads_links)):
                 self.data_list.append({
                     "name":car_names[i],
                     "details":{
