@@ -1,23 +1,27 @@
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import time
+from dotenv import load_dotenv
+import os
+
+
 
 class EmailManager():
+    def __init__(self):
+        load_dotenv()
+        self.sender_email = os.getenv("SENDER_EMAIL")
+        self.password = os.getenv("SENDER_PASSWORD")
+        self.receiver_email = os.getenv("RECEIVER_EMAIL")
 
-    def __int__(self):
-        pass
-
+    def get_email(self):
+        return self.sender_email, self.password
 
     def send_mail(self, car_list):
-        self.sender_email = "pythoncourse.testmail1@gmail.com"
-        self.password = "ysowerrknadupvwg"
-        self.receiver_email = "rafalcriscars@gmail.com"
         self.car_list = car_list
         self.message = MIMEMultipart("alternative")
         self.text=""""""
         self.html=""""""
-        # self.message["Subject"] = "multipart test"
+
         self.message["From"] = self.sender_email
         self.message["To"] = self.receiver_email
 
