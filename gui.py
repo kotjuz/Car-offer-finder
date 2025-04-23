@@ -44,28 +44,33 @@ class ApplicationGui():
 
         min_price_label = Label(self.window, text="Minimalna cena: ", bg="white")
         min_price_label.grid(row=1, column=1, sticky='w', columnspan=2, padx=10)
-        min_price_entry = Entry(self.window, width=30, text)
+        min_price_entry = Entry(self.window, width=30)
         min_price_entry.grid(row=2, column=1, pady=10, padx=10)
+        min_price_entry.insert(0, self.interesting_properties["min_price"])
 
         max_price_label = Label(self.window, text="Maksymalna cena: ", bg="white")
         max_price_label.grid(row=1, column=2, sticky='w', columnspan=2, padx=10)
         max_price_entry = Entry(self.window, width=30)
         max_price_entry.grid(row=2, column=2, pady=10, padx=10)
+        max_price_entry.insert(0, self.interesting_properties["max_price"])
 
         min_year_label = Label(self.window, text="Minimalny rocznik: ", bg="white")
         min_year_label.grid(row=3, column=1, sticky='w', columnspan=2, padx=10)
         min_year_entry = Entry(self.window, width=30)
         min_year_entry.grid(row=4, column=1, pady=10, padx=10)
+        min_year_entry.insert(0, self.interesting_properties["min_year"])
 
         max_year_label = Label(self.window, text="Maksymalny rocznik: ", bg="white")
         max_year_label.grid(row=3, column=2, sticky='w', columnspan=2, padx=10)
         max_year_entry = Entry(self.window, width=30)
         max_year_entry.grid(row=4, column=2, pady=10, padx=10)
+        max_year_entry.insert(0, self.interesting_properties["max_year"])
 
         max_mileage_label = Label(self.window, text="Maksymalny przebieg: ", bg="white")
         max_mileage_label.grid(row=5, column=1, columnspan=2, padx=10)
         max_mileage_entry = Entry(self.window, width=30)
         max_mileage_entry.grid(row=6, column=1, columnspan=2, pady=10, padx=10)
+        max_mileage_entry.insert(0, self.interesting_properties["max_mileage"])
 
         self.entries.extend([min_price_entry, max_price_entry, min_year_entry, max_year_entry, max_mileage_entry])
 
@@ -76,4 +81,4 @@ class ApplicationGui():
 
 
 app = ApplicationGui()
-print(app.get_data())
+print(app.get_properties())
