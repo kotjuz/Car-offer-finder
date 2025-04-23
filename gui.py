@@ -17,7 +17,6 @@ class ApplicationGui():
         self.window.mainloop()
 
     def save_properties(self):
-        print("HEJ")
         self.interesting_properties = {
             "brands": ["peugeot","mercedes","volkswagen", "citroen", "toyota", "kia", "bmw", "audi", "seat", "opel", "skoda", "volvo", "renault", "dacia"],
             "min_price": self.entries[0].get(),
@@ -77,8 +76,3 @@ class ApplicationGui():
         confirm_button = Button(self.window, text="Zatwierdź", width=20, height=1, command=self.save_properties)
         confirm_button.grid(row=8, column=1, columnspan=2, padx=10)
 
-
-
-
-app = ApplicationGui()
-print(app.get_properties())

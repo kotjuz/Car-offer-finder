@@ -1,15 +1,16 @@
 from scrap_manager import ScrapManager
 from data_manager import DataManager
 from email_manager import EmailManager
+from gui import ApplicationGui
 import time
 
 
 scrap_manager = ScrapManager()
 data_manager = DataManager(scrap_manager.data_list)
 email_manager = EmailManager()
+app = ApplicationGui()
 
-scrap_manager.get_whole_page_mobilede()
-
+data_manager.set_interesting_properties(app.get_properties())
 
 for i in range(60):
     interesting_cars = []
