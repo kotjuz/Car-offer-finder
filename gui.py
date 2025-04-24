@@ -19,11 +19,11 @@ class ApplicationGui():
     def save_properties(self):
         self.interesting_properties = {
             "brands": ["peugeot","mercedes","volkswagen", "citroen", "toyota", "kia", "bmw", "audi", "seat", "opel", "skoda", "volvo", "renault", "dacia"],
-            "min_price": self.entries[0].get(),
-            "max_price": self.entries[1].get(),
-            "min_year": self.entries[2].get(),
-            "max_year": self.entries[3].get(),
-            "max_mileage": self.entries[4].get()
+            "min_price": int(self.entries[0].get()),
+            "max_price": int(self.entries[1].get()),
+            "min_year": int(self.entries[2].get()),
+            "max_year": int(self.entries[3].get()),
+            "max_mileage": int(self.entries[4].get())
         }
         with open("properties_config.json", "w") as file:
             file.write(json.dumps(self.interesting_properties))

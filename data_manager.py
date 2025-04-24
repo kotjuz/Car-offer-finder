@@ -35,17 +35,22 @@ class DataManager():
         interesting_cars = []
         for car in new_cars:
             print(car)
+            print(f'Interesting properties: {self.interesting_properties}')
             matches = 0
             brand = car["name"].split()[0]
-            price = car["details"]["price"].split()[1]
+            price = car["details"]["price"].split()[1].replace(".", "")
             mileage = car["details"]["mileage"].replace('.', '')
             if brand.lower() in self.interesting_properties["brands"]:
+                print(f'brand.lower(): {brand.lower()}, {self.interesting_properties["brands"]}')
                 matches += 1
-            if car['details']['price'] == 'Nie podana' or (self.interesting_properties["min_price"] <= car['details']['price'] <= self.interesting_properties["max_price"]):
+            if car['details']['price'] == 'Nie podana' or (self.interesting_properties["min_price"] <= int(price) <= self.interesting_properties["max_price"]):
+                print(f'price(): {price}, {self.interesting_properties["min_price"]}')
                 matches += 1
-            if car['details']['year'] == 'Nie podana' or (self.interesting_properties["min_year"] <= car['details']['year'] <= self.interesting_properties["max_year"]):
+            if car['details']['year'] == 'Nie podana' or (self.interesting_properties["min_year"] <= int(car['details']['year']) <= self.interesting_properties["max_year"]):
+                print(f'year: {car['details']['year']}, {self.interesting_properties["min_year"]}')
                 matches += 1
-            if car['details']['mileage'] == 'Nie podana' or (car['details']['mileage'] <= self.interesting_properties["max_mileage"]):
+            if car['details']['mileage'] == 'Nie podana' or (int(mileage) <= self.interesting_properties["max_mileage"]):
+                print(f'mileage: {mileage}, {self.interesting_properties["max_mileage"]}')
                 matches += 1
             print(matches)
             print(price)

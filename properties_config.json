@@ -1,1 +1,1 @@
-{"brands": ["peugeot", "mercedes", "volkswagen", "citroen", "toyota", "kia", "bmw", "audi", "seat", "opel", "skoda", "volvo", "renault", "dacia"], "min_price": "4000", "max_price": "20000", "min_year": "2017", "max_year": "2026", "max_mileage": "250000"}
+{"brands": ["peugeot", "mercedes", "volkswagen", "citroen", "toyota", "kia", "bmw", "audi", "seat", "opel", "skoda", "volvo", "renault", "dacia"], "min_price": 4000, "max_price": 20000, "min_year": 2017, "max_year": 2026, "max_mileage": 250000}
