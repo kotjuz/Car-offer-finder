@@ -4,14 +4,6 @@ class DataManager():
     def __init__(self, database):
         self.database=database
         self.interesting_properties = {}
-        # self.interesting_properties = {
-        #     "brands": ["peugeot","mercedes","volkswagen", "citroen", "toyota", "kia", "bmw", "audi", "seat", "opel", "skoda", "volvo", "renault", "dacia"],
-        #     "min_price": 100,
-        #     "max_price": 30000,
-        #     "min_year": 2000,
-        #     "max_year": 2026,
-        #     "max_mileage": 300000
-        # }
 
     def set_interesting_properties(self, interesting_properties):
         self.interesting_properties=interesting_properties
@@ -34,27 +26,19 @@ class DataManager():
     def check_for_interesting_cars(self, new_cars):
         interesting_cars = []
         for car in new_cars:
-            print(car)
-            print(f'Interesting properties: {self.interesting_properties}')
             matches = 0
             brand = car["name"].split()[0]
             price = car["details"]["price"].split()[1].replace(".", "")
             mileage = car["details"]["mileage"].replace('.', '')
             if brand.lower() in self.interesting_properties["brands"]:
-                print(f'brand.lower(): {brand.lower()}, {self.interesting_properties["brands"]}')
                 matches += 1
             if car['details']['price'] == 'Nie podana' or (self.interesting_properties["min_price"] <= int(price) <= self.interesting_properties["max_price"]):
-                print(f'price(): {price}, {self.interesting_properties["min_price"]}')
                 matches += 1
             if car['details']['year'] == 'Nie podana' or (self.interesting_properties["min_year"] <= int(car['details']['year']) <= self.interesting_properties["max_year"]):
-                print(f'year: {car['details']['year']}, {self.interesting_properties["min_year"]}')
                 matches += 1
             if car['details']['mileage'] == 'Nie podana' or (int(mileage) <= self.interesting_properties["max_mileage"]):
-                print(f'mileage: {mileage}, {self.interesting_properties["max_mileage"]}')
                 matches += 1
-            print(matches)
-            print(price)
-            print(mileage)
+
             if matches >= 3:
                 interesting_cars.append(car)
 
